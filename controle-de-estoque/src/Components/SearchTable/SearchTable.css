@@ -1,0 +1,11 @@
+.primary-background {
+    background-color: var(--cor-primaria);
+}
+
+.root-table {
+    border: 1px solid var(--cor-secundaria);
+    border-radius: 5px;
+    margin: 20px -10px 20px 10px;
+    height: 230px; /* Altura fixa */
+    overflow-y: auto; /* Rolagem vertical */
+}

@@ -1,0 +1,64 @@
+.root-cadastro-container {
+  margin-left: 50px;
+  margin-right: 50px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.title-container .line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--cor-terciaria);
+  margin: 0 10px;
+}
+
+.title-container .title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: var(--cor-terciaria);
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  color: var(--cor-terciaria);
+  font-size: 20px;
+  margin-top: 20px;
+}
+.line {
+  background-color: var(--cor-terciaria);
+  width: 100%;
+  height: 3px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.simetric-columns{
+    display: flex;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+    gap: 10px;
+
+
+}
+
+.root-form-cadastro-container{
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+
+    width: 100%; /* Certifique-se de que a largura está definida corretamente */
+}

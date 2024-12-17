@@ -1,0 +1,63 @@
+@import url("../../Var.css");
+.adress-card{
+    height: 210px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 10px;
+    color: var(--cor-terciaria);
+    border-color: var(--cor-terciaria);
+    border-style: solid;
+    border-width: 1px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px 4px rgba(4, 75, 28, 0.5);
+    
+    
+}
+.adress{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--cor-primaria);
+    margin: 5px 5px 5px 5px;
+    padding: 10px 10px 10px 10px;
+    width: 95%;
+    border-radius: 10px;
+
+    
+
+}
+
+.delete-button {
+    position: absolute;
+    right: -250px;
+    top: -10px;
+   
+
+}
+.divider{
+    width: 100%;
+    border-color: var(--cor-terciaria);
+    border-style: solid;
+    border-width: 1px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.div-cep{
+    font-weight: bold;
+    margin-top: 5px;
+}
+.div-adress{
+    margin-top: -45px;
+}
+
+.div-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 0px;
+    margin-top: 5px;
+}

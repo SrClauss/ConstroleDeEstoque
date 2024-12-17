@@ -1,0 +1,29 @@
+.root-container-cliente {
+  
+    border: 1px solid var(--cor-terciaria);
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: -10px;
+    
+
+}
+.cliente{
+    background-color: #f6f6f6;
+    color: var(--cor-quaternaria);
+    font-weight: 600;
+    width: fit-content;
+    padding: 0px 10px 0px 10px;
+    margin-left: 20px;
+    margin-top: -20px;
+
+}
+.pedidos-content{
+    margin: 40px 10px 10px 10px;	
+    
+    height: 400px;
+    overflow-y: auto;
+    
+    
+
+}

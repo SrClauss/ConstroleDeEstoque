@@ -1,0 +1,13 @@
+:root{
+    --cor-primaria: #d1ffd0;
+    --cor-secundaria: #549b86;
+    --cor-secundaria-hover: #54969b;
+    --cor-terciaria: #045b1c;
+    --cor-quaternaria: #003000;
+}
+
+
+.primary-background{
+    background-color: var(--cor-primaria);
+   
+}
