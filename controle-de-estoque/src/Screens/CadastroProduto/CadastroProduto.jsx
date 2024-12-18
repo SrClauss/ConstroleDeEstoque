@@ -80,11 +80,21 @@ export default function CadastroProduto() {
     const adaptedProduto = {
       ...currentProduto,
       categoria_id: { $oid: currentProduto.categoria_id },
+      preco_compra: parseFloat(currentProduto.preco_compra),
+      preco_venda: parseFloat(currentProduto.preco_venda),
     };
 
-    invoke("create_produto", {data: adaptedProduto}).then((response) => {
+    invoke("create_a_produto", {data: adaptedProduto}).then((response) => {
       console.log(response);
       handleFindProdutos();
+      setCurrentProduto({
+        _id: null,
+        nome: "",
+        categoria_id: "",
+        preco_compra: "",
+        preco_venda: "",
+        unidade: "",
+      });
     }
     ).catch((error) => {
       console.error(error);
@@ -93,26 +103,34 @@ export default function CadastroProduto() {
   };
   const handleEditProduto = async () => {
 
-    console.log(currentProduto);
+    const adaptedProduto = {
+      ...currentProduto,
+      categoria_id: { $oid: currentProduto.categoria_id },
+      preco_compra: parseFloat(currentProduto.preco_compra),
+      preco_venda: parseFloat(currentProduto.preco_venda),
+    };
+
+    invoke("edit_produto", {data: adaptedProduto}).then((response) => {
+      console.log(response);
+      handleFindProdutos();
+      setCurrentProduto({
+        _id: null,
+        nome: "",
+        categoria_id: "",
+        preco_compra: "",
+        preco_venda: "",
+        unidade: "",
+      });
+    }
+    ).catch((error) => {
+      console.error(error);
+    });
 
   };
   return (
     <>
       <RootScreen>
-        {/*
-        
-pub struct Produto {
-    #[serde(rename = "_id")]
-    pub id: ObjectId,
-    pub nome: String,
-    pub categoria_id: ObjectId,
-    pub preco_compra: f64,
-    pub preco_venda: f64,
-    pub unidade: String,
-    pub estoque_demanda: f64,
-    
-}
-        */}
+
         <CadastroContainer title="Produtos">
           <SearchBar onSubmitSearch={setCriterio} entidade={"produto"} />
           <SearchTable
@@ -153,16 +171,12 @@ pub struct Produto {
                 fullWidth
                 required
                 defaultValue={""}
-                onSelect={
-
-                  (e) => {
-                    setCurrentProduto({
-                      ...currentProduto,
-                      categoria_id: e.target.value,
-                    });
-                  }
-                    
-                }
+                onChange={(e) => {
+                  setCurrentProduto({
+                    ...currentProduto,
+                    categoria_id: e.target.value,
+                  });
+                }}
                 slotProps={{inputLabel:{shrink:!!currentProduto?.categoria_id}}}
                 value={String(currentProduto.categoria_id)}
               >

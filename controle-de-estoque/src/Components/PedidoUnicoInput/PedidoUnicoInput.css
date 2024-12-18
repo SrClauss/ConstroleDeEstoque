@@ -1,0 +1,82 @@
+.root-pedido-unico{
+    margin-top: 10px;
+    border: 1px solid var(--cor-primaria);
+    border-radius: 5px;
+    box-shadow: 0px 0px 1px 0px var(--cor-terciaria);
+    padding: 20px;
+    display: flex;
+
+  
+    
+    
+}
+.subroot-pedido-unico{
+
+    width: 100%;
+}
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Opcional, se você também quiser centralizar horizontalmente */
+    padding-left: 10px;
+}
+
+.inputs-pedido-unico{
+    display: flex;
+    gap: 3px;
+}
+
+
+.infos-pedido-unico{
+    display: flex;
+    gap: 3px;
+    margin-top: 10px;
+    justify-content: center;
+    gap: 10px;
+}
+.columns-info-pedido-unico{
+    display: flex;
+    gap: 3px;
+    justify-content: space-around;
+  
+    width: 100%;
+}
+.info-pedido-unico{
+    display: flex;
+    background-color: var(--cor-primaria);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--cor-quaternaria);
+}
+
+.info-pedido-unico > div:first-child {
+    margin-right: 3px; /* Ajuste o valor conforme necessário */
+}
+
+
+/* 
+ <div className="infos-pedido-unico">
+        <div className="columns-info-pedido-unico">
+          <div className="info-pedido-unico">
+            <div>Preço unitário:</div>
+            <div>R$ 00,00</div>
+          </div>
+          <div className="info-pedido-unico">
+            <div>Preço total:</div>
+            <div>R$ 00,00</div>
+          </div>
+        </div>
+        <div className="columns-info-pedido-unico">
+          <div className="info-pedido-unico">
+            <div>Estoque:</div>
+            <div>00</div>
+          </div>
+          <div className="info-pedido-unico">
+            <div>Estoque mínimo:</div>
+            <div>00</div>
+          </div>
+        </div>
+      </div>
+*/

@@ -344,7 +344,7 @@ async fn create_a_produto(data: Value) -> Result<String, String> {
 
     let produto = Produto::new(
         data["nome"].as_str().unwrap_or("").to_string(),
-        ObjectId::from_str(data["categoria_id"].as_str().unwrap_or("")).unwrap(),
+        ObjectId::from_str(data["categoria_id"]["$oid"].as_str().unwrap_or("")).unwrap(),
         data["preco_compra"]
             .as_str()
             .unwrap_or("")
@@ -534,7 +534,7 @@ async fn update_recurrent_orders(data: Value, entrega: Value) -> Result<String, 
 }
 #[tauri::command]
 async fn update_produto(data: Value) -> Result<String, String> {
-    println!("{:?}", data);
+
     let produto = Produto::read(data["_id"].as_str().unwrap_or("")).await;
     if produto.is_err() {
         return Err(produto.err().unwrap());
@@ -607,9 +607,6 @@ async fn get_cliente_by_id(cliente_id: &str) -> Result<Cliente, String> {
 #[tauri::command]
 async fn edit_produto(data: Value) -> Result<String, String> {
     println!("{:?}", data);
-    /*
-    data = Object {"_id": Object {"$oid": String("674332f1fce6d43e16f3eedb")}, "nome": String("Alface Crespa"), "categoria_id": Object {"$oid": String("67433295fce6d43e16f3eecd")}, "preco_compra": Number(1), "preco_venda": Number(2), "unidade": String("UNIDADE")}
-     */
 
     let produto = Produto::read(data["_id"]["$oid"].as_str().unwrap_or("")).await;
     if produto.is_err() {
@@ -739,11 +736,16 @@ async fn save_pedido_recorrente(data: Value) -> Result<String, String>{
 }
 #[tauri::command]
 async fn filter_produtos_by_category(category_id: &str) -> Result<Vec<Produto>, String> {
-    let produtos = Produto::element_what_contains("categoria_id".to_string(), Bson::ObjectId(ObjectId::from_str(category_id).unwrap())).await;
+    let produtos = Produto::find_all().await;
     if produtos.is_err() {
         return Err(produtos.err().unwrap());
     }
-    Ok(produtos.unwrap())
+    let produtos = produtos.unwrap();
+    let produtos = produtos
+        .into_iter()
+        .filter(|produto| produto.categoria_id.to_hex() == category_id)
+        .collect();
+    Ok(produtos)
 }
 fn main() {
     block_on(async {
@@ -775,6 +777,7 @@ fn main() {
             get_all_produtos,
             get_categorias,
             get_cliente_by_id,
+    
             login,
             movimentacao_entrada,
             movimentacao_saida,
