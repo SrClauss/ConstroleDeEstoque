@@ -1,0 +1,28 @@
+.value-pil{
+    width: fit-content;
+    background-color: var(--cor-primaria);
+    border-radius: 15px;
+    padding: 0px 20px;
+    box-shadow: 1px 2px 2px var(--cor-quaternaria);
+    height:40px;
+    
+}
+
+
+.label{
+    text-align: center;
+    font-size: smaller;
+    margin-top: -10px;
+    color: var(--cor-quaternaria);
+    font-weight: bold;
+    white-space: nowrap;
+
+
+
+}
+.value{
+    text-align: center;
+    font-size: small;
+    color: var(--cor-quaternaria);
+    white-space: nowrap;
+}

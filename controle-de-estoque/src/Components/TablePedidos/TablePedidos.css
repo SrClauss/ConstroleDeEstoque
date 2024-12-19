@@ -1,0 +1,12 @@
+.button-gravar-pedidos{
+
+    width: 100%; 
+    margin-top: 30px;   
+}
+
+.empty-table{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+}

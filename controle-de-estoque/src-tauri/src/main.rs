@@ -479,8 +479,9 @@ async fn movimentacao_saida(data: Value) -> Result<String, String> {
 }
 #[tauri::command]
 async fn create_a_pedido(data: Value) -> Result<String, String> {
-    let cliente_id = data["cliente_id"].as_str().unwrap_or("");
-    let produto = data["produto"].as_str().unwrap_or("");
+    println!("{:?}", data);
+    let cliente_id = data["cliente_id"]["$oid"].as_str().unwrap_or("");
+    let produto = data["produto"]["$oid"].as_str().unwrap_or("");
     let quantidade = data["quantidade"].as_f64().unwrap();
     let date = data["data"].as_str().unwrap_or("");
     let entrega = data["entrega"].as_str().unwrap_or("");
@@ -617,8 +618,8 @@ async fn edit_produto(data: Value) -> Result<String, String> {
     produto.nome = data["nome"].as_str().unwrap_or("").to_string();
     produto.categoria_id =
         ObjectId::from_str(data["categoria_id"]["$oid"].as_str().unwrap_or("")).unwrap();
-    produto.preco_compra = data["preco_compra"].as_f64().unwrap();
-    produto.preco_venda = data["preco_venda"].as_f64().unwrap();
+    produto.preco_compra = data["preco_compra"].as_str().unwrap().parse::<f64>().unwrap();
+    produto.preco_venda = data["preco_venda"].as_str().unwrap().parse::<f64>().unwrap();
 
     let _produto = produto.update(Privilege::Admin).await;
 
@@ -626,7 +627,6 @@ async fn edit_produto(data: Value) -> Result<String, String> {
 }
 #[tauri::command]
 async fn save_pedido_recorrente(data: Value) -> Result<String, String>{
-    //data = Object {"cliente_id": String("67451ffca110d98574d58841"), "pedidos": Array [Object {"produto": String("67451b99a110d98574d58815"), "quantidade": Number(200), "data": String("2024-12-01"), "entrega": String(""), "executado": Bool(false)}], "recorrencia": Object {"value": String("semanal"), "weekDay": Array [Number(1)], "monthDay": Array [], "interval": Array [], "weekMonth": Array []}}
     let cliente_id = data["cliente_id"].as_str().unwrap_or("");
     let pedidos = data["pedidos"].as_array().unwrap();
     let recorrencia = data["recorrencia"].as_object().unwrap();

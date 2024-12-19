@@ -1,15 +1,14 @@
 import RootScreen from "../RootScreen/RootScreen";
 import CadastroContainer from "../../Components/CadastroContainer/CadastroContainer";
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import SearchTable from "../../Components/SearchTable/SearchTable";
 import "./PedidoUnico.css";
 import ContainerCliente from "../../Components/ContainerCliente/ContainerCliente";
-import ProdutoCombo from "../../Components/ProdutoCombo/ProdutoCombo";
-import { Button, IconButton } from "@mui/material";
-import { AddBox } from "@mui/icons-material";
 import PedidoUnicoInput from "../../Components/PedidoUnicoInput/PedidoUnicoInput";
+import { Tab } from "@mui/material";
+import TablePedidos from "../../Components/TablePedidos/TablePedidos";
 
 export default function PedidoUnico() {
   const [currentCliente, setCurrentCliente] = React.useState({
@@ -20,6 +19,8 @@ export default function PedidoUnico() {
     cpf_cnpj: "",
     data_nascimento: "",
   });
+  const [pedidos, setPedidos] = React.useState([]);
+  const [produtos, setProdutos] = React.useState([]); //criei este estado para armazenar os produtos e passar a lista ded nomes dos produtos para tablepedidos
   const [categorias, setCategorias] = React.useState([]);
   const [clientes, setClientes] = React.useState([]);
   const [critery, setCritery] = React.useState("");
@@ -58,6 +59,16 @@ export default function PedidoUnico() {
       });
   }, []);
 
+  const handleCadastraPedido = async (pedido) => {
+    invoke("create_a_pedido", { data: pedido })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <RootScreen>
       <CadastroContainer title={"Pedido Unico"}>
@@ -82,8 +93,29 @@ export default function PedidoUnico() {
             <PedidoUnicoInput
               categorias={categorias}
               cliente={currentCliente}
+              onSubmitPedido={(e) => {
+                setPedidos([...pedidos, e]);
+              }}
+              onSelectProduto={(e) => {
+                setProdutos(
+                  [...produtos, e].filter((produto) => produto !== null)
+                );
+              }}
             />
           )}
+          <TablePedidos
+            pedidos={pedidos}
+            onDeletePedido={(pedido) => {
+              setPedidos(pedidos.filter((p) => p !== pedido));
+            }}
+            onSubmitAllPedidos={(pedidos) => {
+              pedidos.forEach((pedido) => {
+                handleCadastraPedido(pedido);
+              });
+              setPedidos([]);
+            }}
+            produtos={produtos}
+          />
         </ContainerCliente>
       </CadastroContainer>
     </RootScreen>

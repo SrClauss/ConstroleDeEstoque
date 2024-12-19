@@ -13,10 +13,10 @@
     "windows": [
       {
         "title": "controle-de-estoque",
-        "minWidth": 800,
-        "minHeight": 600,
-        "width": 800,
-        "height": 600
+        "minWidth": 1000,
+        "minHeight": 800,
+        "width": 1000,
+        "height": 800
       }
     ],
     "security": {
@@ -34,4 +34,5 @@
       "icons/icon.ico"
     ]
   }
+ 
 }

@@ -54,8 +54,8 @@ export default function CadastroProduto() {
               const categoria = categorias.find(
                 (categoria) => categoria._id.$oid == value[2].$oid
               ).nome;
-              const compra = value[3];
-              const venda = value[4];
+              const compra = parseFloat(value[3]).toFixed(2);
+              const venda = parseFloat(value[4]).toFixed(2);
               const unidade = value[5];
               const estoque = value[6];
               return [nome, categoria, compra, venda, unidade, estoque];
@@ -80,57 +80,54 @@ export default function CadastroProduto() {
     const adaptedProduto = {
       ...currentProduto,
       categoria_id: { $oid: currentProduto.categoria_id },
-      preco_compra: parseFloat(currentProduto.preco_compra),
-      preco_venda: parseFloat(currentProduto.preco_venda),
+      preco_compra: parseFloat(currentProduto.preco_compra).toFixed(2),
+      preco_venda: parseFloat(currentProduto.preco_venda).toFixed(2),
     };
 
-    invoke("create_a_produto", {data: adaptedProduto}).then((response) => {
-      console.log(response);
-      handleFindProdutos();
-      setCurrentProduto({
-        _id: null,
-        nome: "",
-        categoria_id: "",
-        preco_compra: "",
-        preco_venda: "",
-        unidade: "",
+    invoke("create_a_produto", { data: adaptedProduto })
+      .then((response) => {
+        handleFindProdutos();
+        setCurrentProduto({
+          _id: null,
+          nome: "",
+          categoria_id: "",
+          preco_compra: "",
+          preco_venda: "",
+          unidade: "",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    }
-    ).catch((error) => {
-      console.error(error);
-    });
-
   };
   const handleEditProduto = async () => {
-
     const adaptedProduto = {
       ...currentProduto,
       categoria_id: { $oid: currentProduto.categoria_id },
-      preco_compra: parseFloat(currentProduto.preco_compra),
-      preco_venda: parseFloat(currentProduto.preco_venda),
+      preco_compra: parseFloat(currentProduto.preco_compra).toFixed(2),
+      preco_venda: parseFloat(currentProduto.preco_venda).toFixed(2),
     };
 
-    invoke("edit_produto", {data: adaptedProduto}).then((response) => {
-      console.log(response);
-      handleFindProdutos();
-      setCurrentProduto({
-        _id: null,
-        nome: "",
-        categoria_id: "",
-        preco_compra: "",
-        preco_venda: "",
-        unidade: "",
+    invoke("edit_produto", { data: adaptedProduto })
+      .then((response) => {
+        console.log(response);
+        handleFindProdutos();
+        setCurrentProduto({
+          _id: null,
+          nome: "",
+          categoria_id: "",
+          preco_compra: "",
+          preco_venda: "",
+          unidade: "",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    }
-    ).catch((error) => {
-      console.error(error);
-    });
-
   };
   return (
     <>
       <RootScreen>
-
         <CadastroContainer title="Produtos">
           <SearchBar onSubmitSearch={setCriterio} entidade={"produto"} />
           <SearchTable
@@ -157,7 +154,7 @@ export default function CadastroProduto() {
                 value={currentProduto?.nome}
                 fullWidth
                 required
-                slotProps={{inputLabel:{shrink:!!currentProduto?.nome}}}
+                slotProps={{ inputLabel: { shrink: !!currentProduto?.nome } }}
                 onChange={(e) =>
                   setCurrentProduto({ ...currentProduto, nome: e.target.value })
                 }
@@ -177,8 +174,17 @@ export default function CadastroProduto() {
                     categoria_id: e.target.value,
                   });
                 }}
-                slotProps={{inputLabel:{shrink:!!currentProduto?.categoria_id}}}
-                value={String(currentProduto.categoria_id)}
+                slotProps={{
+                  inputLabel: { shrink: !!currentProduto?.categoria_id },
+
+
+
+                }}
+                value={String(
+                  currentProduto?.categoria_id
+                    ? currentProduto.categoria_id
+                    : ""
+                )}
               >
                 <MenuItem value="">Selecione uma categoria</MenuItem>
                 {categorias.map((categoria) => (
@@ -193,12 +199,18 @@ export default function CadastroProduto() {
               <TextField
                 id="preco_compra"
                 size="small"
+                type="number"
                 label="Preço de Compra"
                 variant="outlined"
                 value={currentProduto?.preco_compra}
                 fullWidth
                 required
-                slotProps={{inputLabel: {shrink:!!currentProduto?.preco_compra}}}
+                slotProps={{
+                  inputLabel: { shrink: !!currentProduto?.preco_compra },
+                  input:{
+                    startAdornment: !!currentProduto?.preco_compra ?<span style={{paddingRight: "5px"}}>{"R$"}</span>: null
+                  }
+                }}
                 onChange={(e) =>
                   setCurrentProduto({
                     ...currentProduto,
@@ -210,11 +222,20 @@ export default function CadastroProduto() {
                 id="preco_venda"
                 size="small"
                 label="Preço de Venda"
+                type="number"
                 variant="outlined"
                 value={currentProduto?.preco_venda}
                 fullWidth
                 required
-                slotProps={{inputLabel: {shrink:!!currentProduto?.preco_venda}}}
+                slotProps={{
+                  inputLabel: { shrink: !!currentProduto?.preco_venda },
+
+                  input:{
+
+                    startAdornment: !!currentProduto?.preco_venda ?<span style={{paddingRight: "5px"}}>{"R$"}</span>: null
+
+                  }
+                }}
                 onChange={(e) =>
                   setCurrentProduto({
                     ...currentProduto,
@@ -235,17 +256,20 @@ export default function CadastroProduto() {
                   setCurrentProduto({
                     ...currentProduto,
                     unidade: e.target.value,
-                  })}
-                slotProps={{inputLabel:{shrink:!!currentProduto?.unidade}}}
+                  })
+                }
+                slotProps={{
+                  inputLabel: { shrink: !!currentProduto?.unidade },
+                }}
               />
             </div>
 
-            <Button onClick={editMode? handleEditProduto: handleSaveProduto} variant="contained">
-              {editMode? "Editar": "Salvar"}
-
+            <Button
+              onClick={editMode ? handleEditProduto : handleSaveProduto}
+              variant="contained"
+            >
+              {editMode ? "Editar" : "Salvar"}
             </Button>
-
-
           </FormCadastroContainer>
         </CadastroContainer>
       </RootScreen>

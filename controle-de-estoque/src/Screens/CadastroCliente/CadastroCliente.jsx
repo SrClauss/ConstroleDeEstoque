@@ -137,8 +137,6 @@ export default function CadastroCliente() {
               variant="outlined"
               value={currentCliente?.nome}
               slotProps={{ inputLabel: { shrink: !!currentCliente.nome} }}
-
-              I
               onChange={(e) =>setCurrentCliente({ ...currentCliente, nome: e.target.value })}
             />
           </div>
