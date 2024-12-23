@@ -11,7 +11,7 @@ import CadastroCliente from "./Screens/CadastroCliente/CadastroCliente";
 import CadastroCategoria from "./Screens/CadastroCategoria/CadastroCategoria";
 import CadastroFornecedor from "./Screens/CadastroFornecedor/CadastroFornecedor";
 import CadastroProduto from "./Screens/CadastroProduto/CadastroProduto";
-import PedidoRecorrente from "./Screens/PedidoRecorrente/PedidoRecorrente";
+import CadastroContrato from "./Screens/CadastroContrato/CadastroContrato";
 import PedidoUnico from "./Screens/PedidoUnico/PedidoUnico";
 import Compras from "./Screens/Compras/Compras";
 import Configuracoes from "./Screens/Configuracoes/Configuracoes";
@@ -23,6 +23,8 @@ const App = () => {
     palette: {
       primary: { main: '#549b86' },
       secondary: { main: '#045b1c' },
+      black: { main: '#000000' },
+      error: { main: '#ff0000' },
     },
     components: {
       MuiInputBase: {
@@ -59,8 +61,8 @@ const ScreenRenderer = () => {
       return <CadastroFornecedor />;
     case 'CadastroProduto':
       return <CadastroProduto />;
-    case 'PedidoRecorrente':
-      return <PedidoRecorrente />;
+    case 'CadastroContrato':
+      return <CadastroContrato />; 
     case 'PedidoUnico':
       return <PedidoUnico />;
     case 'Configuracoes':

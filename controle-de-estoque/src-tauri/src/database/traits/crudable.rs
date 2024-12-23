@@ -15,6 +15,10 @@ pub trait Crudable: Send + Sync + DeserializeOwned + Serialize + Clone + Debug {
         let db = connect().await;
         db.collection(Self::collection_name())
     }
+
+    async fn db() -> mongodb::Database {
+        connect().await
+    }
     fn collection_name() -> &'static str;
     fn id(&self) -> String;
     fn privilege_for_create() -> Privilege {
@@ -257,6 +261,38 @@ pub trait Crudable: Send + Sync + DeserializeOwned + Serialize + Clone + Debug {
             None => Err("Documento não encontrado".to_string()),
         }
     }
+
+
+    async fn atomic_create(list: Vec<Self>) -> Result<Vec<Self>, String> {
+        let collection = Self::collection().await;
+        
+        // Tenta bulk insert
+        match collection.insert_many(list.clone()).await {
+            Ok(_) => Ok(list),
+            Err(e) => {
+                // Coleta IDs dos documentos que precisam ser removidos
+                let ids: Vec<String> = list.iter()
+                    .map(|doc| doc.id().to_string())
+                    .collect();
+                
+                // Cria filtro para delete_many
+                let filter = doc! {
+                    "_id": {
+                        "$in": ids
+                    }
+                };
+                
+                // Executa rollback
+                match collection.delete_many(filter).await {
+                    Ok(_) => (),
+                    Err(rollback_err) => println!("Erro no rollback: {}", rollback_err)
+                }
+                
+                Err(format!("Erro no bulk insert: {}", e))
+            }
+        }
+    }
+  
 }
 
 #[repr(i8)]

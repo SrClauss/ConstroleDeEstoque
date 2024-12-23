@@ -1,19 +1,25 @@
-import MenuBar from "../../Components/MenuBar/MenuBar";
-import ValuePil from "../../Components/ValuePil/ValuePil";
+import CadastroContainer from "../../Components/CadastroContainer/CadastroContainer";
+import React from "react";
+import RootScreen from "../RootScreen/RootScreen";
 
 export default function MainScreen() {
 
+    
+      const [produtos, setProdutos] = React.useState([]);
+      const [clientes, setClientes] = React.useState([]);
+      const [contratosHoje, setContratosHoje] = React.useState([]);
+      const [pedidosHoje, setPedidosHoje] = React.useState([]);
+      const [loading, setLoading] = React.useState(true);
+    
+
     return (
-        <div>
+
+        <RootScreen>
+            <CadastroContainer title="Dashboard">
+            </CadastroContainer>
 
 
-                <MenuBar />
-                <div> Home</div>
-                <ValuePil label="Produtos" color="#ff2536" value="100" />
-
-
-        </div>
-
+        </RootScreen>
     )
 
 

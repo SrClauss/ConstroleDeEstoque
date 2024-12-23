@@ -1,0 +1,8 @@
+.nenhum-cliente{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    color: var(--cor-quaternaria);
+    font-size: 20px;
+    
+}

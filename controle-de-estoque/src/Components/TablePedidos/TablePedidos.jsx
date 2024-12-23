@@ -11,9 +11,6 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 export default function TablePedidos({ pedidos, onDeletePedido, produtos, onSubmitAllPedidos }) {
-  useEffect(() => {
-    console.log(pedidos);
-  }, [pedidos]);
 
 
   return (

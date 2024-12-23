@@ -19,7 +19,7 @@ export default function MenuBar() {
                     <div tabIndex={1} onClick={() => setActiveScreen("PedidoUnico")} className="button-menu-bar"><ShoppingCart fontSize="large" /></div>
                 </Tooltip>
                 <Tooltip title="Cadastrar Pedido Recorrente" placement="bottom">
-                    <div tabIndex={2} onClick={() => setActiveScreen("PedidoRecorrente")} className="button-menu-bar"><RepeatOn fontSize="large" /></div>
+                    <div tabIndex={2} onClick={() => setActiveScreen("CadastroContrato")} className="button-menu-bar"><RepeatOn fontSize="large" /></div>
                 </Tooltip>
                 <Tooltip title="Compras" placement="bottom">
                     <div tabIndex={2} onClick={() => setActiveScreen("Compras")} className="button-menu-bar"><Shop2 fontSize="large" /></div>

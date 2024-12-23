@@ -13,6 +13,7 @@ export default function CadastroProduto() {
   const [currentProduto, setCurrentProduto] = React.useState({});
   const [criterio, setCriterio] = React.useState("");
   const [editMode, setEditMode] = React.useState(false);
+  const [selectedRow, setSelectedRow] = React.useState(null);
 
   const getCategorias = async () => {
     const categorias = await invoke("get_categorias");
@@ -111,6 +112,7 @@ export default function CadastroProduto() {
     invoke("edit_produto", { data: adaptedProduto })
       .then((response) => {
         console.log(response);
+
         handleFindProdutos();
         setCurrentProduto({
           _id: null,
@@ -132,8 +134,9 @@ export default function CadastroProduto() {
           <SearchBar onSubmitSearch={setCriterio} entidade={"produto"} />
           <SearchTable
             data={produtos}
+            onSetSelectedRow={setSelectedRow}
+            selectedRow={selectedRow}
             onDataChange={handleChangeProduto}
-            stateSelected={true}
             nullData={{
               _id: null,
               nome: "",

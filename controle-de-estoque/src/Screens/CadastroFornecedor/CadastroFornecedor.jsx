@@ -27,6 +27,7 @@ export default function CadastroFornecedor() {
     const [critery, setCritery] = React.useState("");
     const [stateSelected, setStateSelected] = React.useState(false);
     const [editMode, setEditMode] = React.useState(false);
+    const [selectedRow, setSelectedRow] = React.useState(null);
     const handleFindFornecedor = async () => {
         invoke("find_fornecedor_by_substring_name", { nameSubstring: critery })
             .then((response) => {
@@ -110,7 +111,8 @@ export default function CadastroFornecedor() {
                 <SearchTable
                     data={fornecedores}
                     onDataChange={setCurrentFornecedor}
-                    stateSelected={stateSelected}
+                    selectedRow={selectedRow}
+                    onSetSelectedRow={setSelectedRow}
                     nullData={{
                         _id: null,
                         nome: "",

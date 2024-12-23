@@ -1,0 +1,27 @@
+.root-contrato-input{
+    display: flex;
+    flex-direction: row;
+
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.contrato-input{
+    display: flex;
+    margin-top: 10px;
+    width: 100%;
+    gap: 10px;
+    flex-direction: column;
+
+}
+.contrato-row{
+    display: flex;
+    gap: 3px;
+    flex-direction: row;
+}
+.column-btn{
+    width: fit-content;
+
+    height: auto;
+align-content: center;
+}

@@ -1,17 +1,32 @@
 import "./PedidoUnicoInput.css";
 import ProdutoCombo from "../ProdutoCombo/ProdutoCombo";
 import React, { useEffect, useState } from "react";
-import { TextField, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
+import ValuePil from "../ValuePil/ValuePil";
+import {
+  TextField,
+  IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+} from "@mui/material";
 import { AddBox } from "@mui/icons-material";
 
-export default function PedidoUnicoInput({ categorias, onSubmitPedido, cliente, onSelectProduto }) {
+export default function PedidoUnicoInput({
+  categorias,
+  onSubmitPedido,
+  cliente,
+  onSelectProduto,
+}) {
   const [produto, setProduto] = useState(null);
   const [pedido, setPedido] = useState({
     cliente_id: cliente._id,
-    produto: '',
+    produto: "",
     quantidade: 0,
-    data: new Date().toISOString().split('T')[0], // Data padrão para hoje
-    entrega: new Date().toISOString().split('T')[0], // Entrega padrão para hoje
+    data: new Date().toISOString().split("T")[0], // Data padrão para hoje
+    entrega: new Date().toISOString().split("T")[0], // Entrega padrão para hoje
     executado: false,
   });
   const [open, setOpen] = useState(false);
@@ -34,14 +49,12 @@ export default function PedidoUnicoInput({ categorias, onSubmitPedido, cliente, 
     setProdutoComboClearTrigger(!produtoComboClearTrigger);
     setPedido({
       cliente_id: cliente._id,
-      produto: '',
+      produto: "",
       quantidade: 0,
-      data: new Date().toISOString().split('T')[0],
-      entrega: new Date().toISOString().split('T')[0],
+      data: new Date().toISOString().split("T")[0],
+      entrega: new Date().toISOString().split("T")[0],
       executado: false,
     });
-    
-    
   };
 
   const handleClose = () => {
@@ -52,13 +65,19 @@ export default function PedidoUnicoInput({ categorias, onSubmitPedido, cliente, 
     <div className="root-pedido-unico">
       <div className="subroot-pedido-unico">
         <div className="inputs-pedido-unico">
-          <ProdutoCombo categorias={categorias} onSelectProduto={setProduto} clearTrigger={produtoComboClearTrigger} />
+          <ProdutoCombo
+            categorias={categorias}
+            onSelectProduto={setProduto}
+            clearTrigger={produtoComboClearTrigger}
+          />
           <TextField
             label="Quantidade"
             type="number"
             size="small"
             value={pedido.quantidade}
-            onChange={(e) => setPedido({ ...pedido, quantidade: e.target.value })}
+            onChange={(e) =>
+              setPedido({ ...pedido, quantidade: e.target.value })
+            }
           />
           <TextField
             label="Data"
@@ -85,39 +104,35 @@ export default function PedidoUnicoInput({ categorias, onSubmitPedido, cliente, 
             }}
           />
         </div>
-
         <div className="infos-pedido-unico">
-          <div className="columns-info-pedido-unico">
-            <div className="info-pedido-unico">
-              <div>Categoria:</div>
-              <div>
-                {produto
-                  ? categorias.find(
-                      (categoria) =>
-                        categoria._id.$oid === produto.categoria_id.$oid
-                    ).nome
-                  : ""}
-              </div>
-            </div>
-            <div className="info-pedido-unico">
-              <div>Preço unitário:</div>
-              <div>R$ {produto ? produto.preco_venda : "00,00"}</div>
-            </div>
-          </div>
-          <div className="columns-info-pedido-unico">
-            <div className="info-pedido-unico">
-              <div>Preço total:</div>
-              <div>R$ {produto ? produto.preco_venda * pedido.quantidade : "00,00"}</div>
-            </div>
-            <div className="info-pedido-unico">
-              <div>Estoque:</div>
-              <div>{produto ? produto.estoque_demanda : "00"}</div>
-            </div>
-            <div className="info-pedido-unico">
-              <div>Saldo: </div>
-              <div>{produto ? produto.estoque_demanda - pedido.quantidade : "00"}</div>
-            </div>
-          </div>
+          <ValuePil
+            label="Categoria"
+            value={
+              produto
+                ? categorias.find(
+                    (categoria) =>
+                      categoria._id.$oid === produto.categoria_id.$oid
+                  ).nome
+                : ""
+            }
+          />
+          <ValuePil
+            label="Preço unitário"
+            value={produto ? produto.preco_venda : "00,00"}
+          />
+
+          <ValuePil
+            label="Preço total"
+            value={produto ? produto.preco_venda * pedido.quantidade : "00,00"}
+          />
+          <ValuePil
+            label="Estoque"
+            value={produto ? produto.estoque_demanda : "00"}
+          />
+          <ValuePil
+            label="Saldo"
+            value={produto ? produto.estoque_demanda - pedido.quantidade : "00"}
+          />
         </div>
       </div>
       <div className="button">

@@ -5,24 +5,23 @@ import "./SearchTable.css";
 export default function SearchTable({
   data,
   onDataChange,
-  stateSelected,
+  selectedRow,
+  onSetSelectedRow,
   nullData,
 }) {
-  const [selectedRow, setSelectedRow] = React.useState(null);
+
   const [currentId, setCurrentId] = React.useState(null);
 
-  useEffect(() => {
-    setSelectedRow(null);
-  }, [stateSelected]);
+
   const handleSelect = (id, index, response) => {
     if (index === selectedRow) {
-      setSelectedRow(null);
+      onSetSelectedRow(null);
       setCurrentId(null);
       onDataChange(nullData);
 
       return;
     }
-    setSelectedRow(index);
+    onSetSelectedRow(index);
     setCurrentId(id);
     onDataChange(response);
   };

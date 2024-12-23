@@ -16,7 +16,7 @@ export default function CadastroCategoria() {
     descricao: ""
   });
   const [categorias, setCategorias] = React.useState([]);
-
+  const [selectedRow, setSelectedRow] = React.useState(null);
   const [critery, setCritery] = React.useState("");
   const [editMode, setEditMode] = React.useState(false)
   const [stateSelected, setStateSelected] = React.useState(false);
@@ -102,7 +102,7 @@ export default function CadastroCategoria() {
     <RootScreen>
       <CadastroContainer title={"Categorias"}>
         <SearchBar onSubmitSearch={setCritery} entidade={"Categoria"} />
-        <SearchTable data={categorias} onDataChange={setCurrentCategoria} stateSelected={stateSelected} nullData={{
+        <SearchTable data={categorias}  onDataChange={setCurrentCategoria} selectedRow={selectedRow} onSetSelectedRow={setSelectedRow} nullData={{
           _id:null,
           nome: "",
           descricao: ""

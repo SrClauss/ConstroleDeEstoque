@@ -7,7 +7,6 @@ import SearchTable from "../../Components/SearchTable/SearchTable";
 import "./PedidoUnico.css";
 import ContainerCliente from "../../Components/ContainerCliente/ContainerCliente";
 import PedidoUnicoInput from "../../Components/PedidoUnicoInput/PedidoUnicoInput";
-import { Tab } from "@mui/material";
 import TablePedidos from "../../Components/TablePedidos/TablePedidos";
 
 export default function PedidoUnico() {
@@ -24,7 +23,7 @@ export default function PedidoUnico() {
   const [categorias, setCategorias] = React.useState([]);
   const [clientes, setClientes] = React.useState([]);
   const [critery, setCritery] = React.useState("");
-  const [stateSelected, setStateSelected] = React.useState(false);
+  const [selectedRow, setSelectedRow] = React.useState(null);
   const handleFindCliente = async () => {
     invoke("find_cliente_by_substring_name", { nameSubstring: critery })
       .then((response) => {
@@ -76,7 +75,8 @@ export default function PedidoUnico() {
         <SearchTable
           data={clientes}
           onDataChange={setCurrentCliente}
-          stateSelected={stateSelected}
+          selectedRow={selectedRow}
+          onSetSelectedRow={setSelectedRow}
           nullData={{
             _id: null,
             nome: "",

@@ -26,7 +26,7 @@ export default function CadastroCliente() {
   const [critery, setCritery] = React.useState("");
   const [dateTypeType, setDateTypeType] = React.useState("text");
   const [editMode, setEditMode] = React.useState(false)
-  const [stateSelected, setStateSelected] = React.useState(false);
+  const [selectedRow, setSelectedRow] = React.useState(null);
 
   const handleFindCliente = async () => {
     invoke("find_cliente_by_substring_name", { nameSubstring: critery })
@@ -118,7 +118,7 @@ export default function CadastroCliente() {
     <RootScreen>
       <CadastroContainer title={"Clientes"}>
         <SearchBar onSubmitSearch={setCritery} entidade={"Cliente"}/>
-        <SearchTable data={clientes} onDataChange={setCurrentCliente} stateSelected={stateSelected} nullData={{
+        <SearchTable data={clientes} onDataChange={setCurrentCliente} selectedRow={selectedRow} onSetSelectedRow={setSelectedRow} nullData={{
         _id: null,
         nome: "",
         email: "",

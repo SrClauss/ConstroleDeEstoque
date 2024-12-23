@@ -6,7 +6,7 @@ use mongodb::results::DeleteResult;
 use mongodb::bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
 use super::pedido::Pedido;
-use super::pedidos_semanais::PedidosSemanais;
+
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Cliente {
@@ -44,23 +44,11 @@ impl Cliente {
     }
     pub async fn cascade_delete(&self) -> Result<Vec<DeleteResult>, String> {
         let mut  delete_results: Vec<DeleteResult> = Vec::new();
-        let collection_pedidos_recorrentes = PedidosSemanais::collection().await;
         let collection_pedidos = Pedido::collection().await;
         let self_id = ObjectId::parse_str(self.id.to_hex().as_str()).unwrap();
-        let filter_pedidos_recorrentes = doc! {
-            "pedidos.0.cliente_id": self_id
-        };
         let filter_pedidos = doc! {
             "cliente_id": self_id
         };
-        let pedidos_recorrentes = collection_pedidos_recorrentes
-            .delete_many(filter_pedidos_recorrentes)
-            .await
-            .map_err(|e| e.to_string())?;
-        if pedidos_recorrentes.deleted_count > 0 {
-            delete_results.push(pedidos_recorrentes);
-        }
-
         let pedidos = collection_pedidos
             .delete_many(filter_pedidos)
             .await
